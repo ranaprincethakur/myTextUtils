@@ -31,7 +31,32 @@ export default function TextForm(props) {
     let newText= text.split(/[ ]+/);
     setText(newText.join(" "));
   }
+  const handleNewSentence=()=>{
 
+    let newText = capitalizeSentences(text);
+    setText(newText);
+    function capitalizeSentences(text) {
+      // Use a regular expression to split the string into an array of sentences
+      const sentences = text.split(/([.?!])\s+/);
+      
+      // Iterate over each sentence and capitalize the first character
+      const capitalizedSentences = sentences.map(sentence => {
+        // Trim any leading whitespace
+        sentence = sentence.trim();
+        
+        // Capitalize the first character
+        sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1);
+        
+        return sentence;
+      });
+      
+      // Join the sentences back into a single string
+      const result = capitalizedSentences.join(' ');
+      
+      return result;
+    }
+
+  }
   const handleOnChange= (event)=>{
         // console.log("on change");
        setText(event.target.value);
@@ -47,6 +72,7 @@ export default function TextForm(props) {
         <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleUpClick}>Convert to Uppercase</button>
         <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleLoClick}>Convert to Lowercase</button>
         <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleExtraSpaces}>Remove Extra Spaces</button>
+        <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleNewSentence}>Remove Extra Spaces</button>
         <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleCopy}>Copy to clipboard</button>
         <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleClearClick}>Clear Text</button>
   </div>
