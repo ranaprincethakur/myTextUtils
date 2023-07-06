@@ -27,8 +27,12 @@ export default function TextForm(props) {
     setText(newText);
     props.showAlert("Text Cleared","danger");
   }
+  const handleExtraSpaces= ()=>{
+    let newText= text.split(/[ ]+/);
+    setText(newText.join(" "));
+  }
 
-    const handleOnChange= (event)=>{
+  const handleOnChange= (event)=>{
         // console.log("on change");
        setText(event.target.value);
     }
@@ -42,12 +46,13 @@ export default function TextForm(props) {
         </div>
         <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleUpClick}>Convert to Uppercase</button>
         <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleLoClick}>Convert to Lowercase</button>
+        <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleExtraSpaces}>Remove Extra Spaces</button>
         <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleCopy}>Copy to clipboard</button>
         <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleClearClick}>Clear Text</button>
   </div>
   <div className="container my-3"style={{ color:props.mode==='dark'?'white':'black' }}>
     <h2>Your text summary</h2>
-    {/* /\s+/ is a regular expression where s selests spaces and newline and g is global flag */}
+    {/* /\s+/ is a regular expression where s selects spaces and newline and g is global flag */}
     <p>{text.split(/\s+/g).filter((element)=>{return element.length!==0}).length} words, {text.length} characters</p>
     {/* split() splits a string into an array of substrings */}
     <p>{0.008*text.split(" ").filter((element)=>{return element.length!==0}).length} minutes to read</p>
